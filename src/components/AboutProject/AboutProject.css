@@ -1,0 +1,182 @@
+.project {
+  margin: 0 auto;
+  padding: 110px 70px;
+}
+
+@media screen and (max-width: 768px) {
+  .project {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project {
+    padding: 70px 18px;
+  }
+}
+
+.project__columns {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .project__columns {
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project__columns {
+    padding: 60px 0;
+    flex-direction: column;
+    gap: 56px;
+  }
+}
+
+.project__paragraph {
+  padding: 70px 0px 110px 0;
+  max-width: 550px;
+}
+
+@media screen and (max-width: 768px) {
+  .project__paragraph {
+    padding-bottom: 93px;
+    max-width: 319px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project__paragraph {
+    padding: 0;
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .project__paragraph {
+    padding: 0;
+    max-width: 284px;
+  }
+}
+
+.project__paragraph-subtitle {
+  margin: 0;
+  margin-bottom: 26px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 768px) {
+  .project__paragraph-subtitle {
+    margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project__paragraph-subtitle {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+}
+
+.project__paragraph-text {
+  margin: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.42;
+}
+
+@media screen and (max-width: 768px) {
+  .project__paragraph-text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project__paragraph-text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}
+
+.project__period-container {
+  margin: 0;
+  display: grid;
+  /*В ПП есть расхождения по пикселям, но грид самостоятельно рассчитывает 1/5 и 4/5. На мой взгляд текущее отображение графика будет логичнее.*/
+  grid-template-columns: 1fr 4fr;
+  gap: 14px 0;
+  grid-template-areas:
+    'one-week four-week'
+    'one-week four-week';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+}
+
+@media screen and (width: 768px) {
+  .project__period-container {
+    grid-template-columns: 140px 528px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .project__period-container {
+    font-size: 11px;
+    line-height: 1.18;
+    gap: 10px 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .project__period-container {
+    grid-template-columns: 100px 184px;
+  }
+}
+
+.project__weeks {
+  margin: 0;
+  padding: 9px 0;
+}
+
+@media screen and (max-width: 320px) {
+  .project__weeks {
+    padding: 11px 0;
+  }
+}
+
+.project__weeks_green {
+  grid-area: one-week;
+  background-color: #3ddc84;
+  color: #000000;
+}
+
+.project__weeks_dark {
+  grid-area: four-week;
+  margin: 0;
+  padding: 9.5px 0;
+  background-color: #303030;
+  color: #ffffff;
+}
+
+.project__weeks-caption {
+  margin: 0;
+  color: #8b8b8b;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .project__weeks-caption {
+    font-weight: 400;
+  }
+}

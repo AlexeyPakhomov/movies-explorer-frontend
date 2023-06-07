@@ -1,0 +1,54 @@
+.promo {
+  margin: 0 auto;
+  margin-top: -74px;
+  padding-top: 74px;
+  width: 100%;
+  min-height: 524px;
+  background-color: #073042;
+  background-image: url(../../images/logo-P.svg);
+  background-repeat: no-repeat;
+  background-size: 320px;
+  background-position: center 156px;
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .promo {
+    min-height: 784px;
+    background-position: center 298px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .promo {
+    min-height: 570px;
+    background-size: 248px;
+    background-position: center 216px;
+  }
+}
+
+.promo__text {
+  margin: 0 auto;
+  margin-top: 184px;
+  max-width: 730px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+
+@media screen and (max-width: 768px) {
+  .promo__text {
+    margin-top: 326px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .promo__text {
+    margin-top: 207px;
+    font-size: 31px;
+    line-height: 1.26;
+  }
+}
