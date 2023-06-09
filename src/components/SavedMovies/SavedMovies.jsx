@@ -9,9 +9,11 @@ function SavedMovies({ loggedIn }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
-      <SearchForm />
-      <MoviesCardList moviesData={moviesData} />
-      <Footer />
+      <main>
+        <SearchForm />
+        <MoviesCardList moviesData={moviesData} />
+        <Footer />
+      </main>
     </>
   );
 }

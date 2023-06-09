@@ -20,7 +20,7 @@ function Register() {
       buttonText="Зарегистрироваться"
       text="Уже зарегистрированы? "
       linkText="Войти">
-      <form className="sign__form" name="signUpForm" onSubmit={handleSubmit} noValidate>
+      <form className="sign__form" name="signUpForm" onSubmit={handleSubmit}>
         <label className="sign__form-label">
           Имя
           <input
