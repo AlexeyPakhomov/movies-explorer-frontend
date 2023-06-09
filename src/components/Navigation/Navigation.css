@@ -1,0 +1,103 @@
+/*Landing page*/
+
+.header__landing {
+  margin-left: auto;
+  padding: 0;
+  max-width: 183px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+@media screen and (max-width: 320px) {
+  .header__landing {
+    max-width: 132px;
+    max-height: 26px;
+    gap: 14px;
+  }
+}
+
+.header__landing-sign-up {
+  padding: 0;
+  /*margin: 8px auto;*/
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+@media screen and (max-width: 320px) {
+  .header__landing-sign-up {
+    margin: 5px auto;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}
+
+.header__landing-sign-in {
+  padding: 8px 20px;
+  background-color: #3ddc84;
+  color: #000000;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  border: none;
+  border-radius: 3px;
+}
+
+@media screen and (max-width: 320px) {
+  .header__landing-sign-in {
+    padding: 1px 12px;
+    font-size: 10px;
+    line-height: 1.4;
+    height: 26px;
+  }
+}
+
+/*Main-page*/
+
+.header__main {
+  margin-left: 44px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .header__main {
+    display: none;
+  }
+}
+
+.header__main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.38;
+}
+
+.header__main-btn-movie {
+  padding: 0;
+  min-width: 54px;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+}
+
+.header__main-save-movie {
+  padding: 0;
+  min-width: 144px;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+}

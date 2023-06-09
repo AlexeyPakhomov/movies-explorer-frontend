@@ -1,0 +1,27 @@
+/*Button account*/
+
+.btn-account {
+  margin: 0;
+  padding: 0;
+  width: 100px;
+  height: 32px;
+  box-sizing: border-box;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(170, 170, 170, 0.2);
+  border-radius: 50px;
+}
+
+.btn-account__text {
+  margin: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+}

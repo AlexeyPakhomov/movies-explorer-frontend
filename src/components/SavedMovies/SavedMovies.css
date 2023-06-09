@@ -1,0 +1,16 @@
+.cards-saved {
+  margin: 0;
+  padding: 70px 70px 170px;
+}
+
+@media screen and (max-width: 900px) {
+  .cards-saved {
+    padding: 70px 30px 170px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .cards-saved {
+    padding: 40px 10px 170px;
+  }
+}

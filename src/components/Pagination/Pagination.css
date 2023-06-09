@@ -1,0 +1,27 @@
+.pagination {
+  padding: 50px 0 80px;
+}
+
+.pagination__btn {
+  margin: 0 auto;
+  padding: 0;
+  display: block;
+  width: 320px;
+  height: 36px;
+  background-color: #202020;
+  border: 1px solid #424242;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 400px) {
+  .pagination__btn {
+    width: 240px;
+  }
+}

@@ -1,0 +1,152 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 364px;
+  height: 271px;
+  background: #222222;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (max-width: 900px) {
+  .card {
+    width: 339px;
+    height: 258px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card {
+    width: 300px;
+    height: 236px;
+  }
+}
+
+.card__info {
+  padding: 14px;
+  width: 336px;
+  min-height: 40px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 280px, 30px;
+  gap: 9px 26px;
+  grid-template-areas:
+    'title button'
+    'duration button';
+}
+
+@media screen and (max-width: 900px) {
+  .card__info {
+    width: 311px;
+    grid-template-columns: 250px, 30px;
+    gap: 9px 31px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card__info {
+    width: 272px;
+    grid-template-columns: 210px, 30px;
+    gap: 9px 32px;
+  }
+}
+
+.card__title {
+  margin: 0;
+  width: 280px;
+  grid-area: title;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 900px) {
+  .card__title {
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card__title {
+    width: 210px;
+  }
+}
+
+.card__duration {
+  margin: 0;
+  grid-area: duration;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+  color: #8b8b8b;
+}
+
+.card__poster {
+  max-width: 364px;
+  max-height: 203px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 900px) {
+  .card__poster {
+    max-width: 339px;
+    max-height: 190px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card__poster {
+    max-width: 300px;
+    max-height: 168px;
+  }
+}
+
+.card__img {
+  max-width: 364px;
+  max-height: 203px;
+}
+
+@media screen and (max-width: 900px) {
+  .card__img {
+    max-width: 339px;
+    max-height: 190px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card__img {
+    max-width: 300px;
+    max-height: 168px;
+  }
+}
+
+.card__not-saved {
+  padding: 0;
+  grid-area: button;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../images/card_notSaved.svg);
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+
+.card__saved {
+  background-image: url(../../images/card__saved.svg);
+}
+
+.card__delete {
+  padding: 0;
+  grid-area: button;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../images/card_delete.svg);
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
