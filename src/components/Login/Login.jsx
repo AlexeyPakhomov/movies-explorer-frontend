@@ -16,7 +16,7 @@ function Login() {
 
   return (
     <SignForm title="Рады видеть!" text="Ещё не зарегистрированы? " linkText="Регистрация">
-      <form className="sign__form" name="signInForm" onSubmit={handleSubmit} noValidate>
+      <form className="sign__form" name="signInForm" onSubmit={handleSubmit}>
         <label className="sign__form-label">
           E-mail
           <input
