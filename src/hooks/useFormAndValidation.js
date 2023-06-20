@@ -1,15 +1,15 @@
 import { useState, useCallback } from 'react';
 
-function useFormAndValidation() {
+export const useFormAndValidation = () => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: evt.target.validationMessage });
-    setIsValid(evt.target.closest('form').checkValidity());
+    setErrors({ ...errors, [name]: e.target.validationMessage });
+    setIsValid(e.target.closest('form').checkValidity());
   };
 
   const resetForm = useCallback(
@@ -21,6 +21,17 @@ function useFormAndValidation() {
     [setValues, setErrors, setIsValid],
   );
 
+  const signInBtnValid =
+    values.email === '' || values.password === '' || errors.email !== '' || errors.password !== '';
+
+  const signUpBtnValid =
+    values.name === '' ||
+    values.email === '' ||
+    values.password === '' ||
+    errors.name !== '' ||
+    errors.email !== '' ||
+    errors.password !== '';
+
   return {
     values,
     handleChange,
@@ -29,7 +40,7 @@ function useFormAndValidation() {
     resetForm,
     setValues,
     setIsValid,
+    signInBtnValid,
+    signUpBtnValid,
   };
-}
-
-export default useFormAndValidation;
+};
