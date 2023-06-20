@@ -76,7 +76,6 @@ function Register({ onSignUp, error, setError, textError, isLoading }) {
                 form="signUpForm"
                 type="password"
                 name="password"
-                minLength="8"
                 required
                 placeholder="Пароль"
                 value={password || ''}

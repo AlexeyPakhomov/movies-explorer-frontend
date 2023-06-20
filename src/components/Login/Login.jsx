@@ -54,7 +54,6 @@ function Login({ onSignIn, error, setError, textError, isLoading }) {
                 form="signInForm"
                 type="password"
                 name="password"
-                minLength="8"
                 required
                 placeholder="Пароль"
                 value={password || ''}
