@@ -6,6 +6,7 @@ function BtnAccount({ handleToggleMenu }) {
   return (
     <Link
       to="/profile"
+      className="link"
       onClick={handleToggleMenu}>
       <div className="btn-account link">
         <img
