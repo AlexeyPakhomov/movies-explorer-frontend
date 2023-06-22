@@ -1,9 +1,13 @@
 export const MAIN_URL = 'https://api.pakhomov.nomoredomains.rocks';
 export const BEATFILM_URL = 'https://api.nomoreparties.co';
 
-//export const patternEmail = '[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
-//export const patternName = '^[a-zA-Zа-яА-ЯёЁs-]+$';
+export const PATTERN_EMAIL = /[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/i;
+export const PATTERN_NAME = /^[a-zA-Zа-яА-ЯёЁ\s-]{2,30}$/i;
 
+export const INVALID_NAME_ERR =
+  'Поле name может содержать только латиницу, кириллицу, пробел или дефис. Длина от 2 до 30 символов.';
+export const INVALID_EMAIL_ERR = 'Указан неверный email';
+export const EMPTY_INPUT_ERR = 'Поле обязательно к заполнению';
 export const NOT_FOUND_MOVIE = 'Ничего не найдено';
 export const ERROR_SEARCH_MOVIE =
   'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';

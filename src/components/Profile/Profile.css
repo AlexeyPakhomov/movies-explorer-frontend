@@ -166,6 +166,10 @@
   line-height: 1.23;
 }
 
+.profile__edit_hide {
+  display: none;
+}
+
 @media screen and (max-width: 320px) {
   .profile__edit {
     font-size: 12px;
@@ -189,7 +193,11 @@
   text-align: center;
 }
 
-.profile__edit_ok-dasabled {
+.profile__edit_ok-hide {
+  display: none;
+}
+
+.profile__edit_ok:disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
 }

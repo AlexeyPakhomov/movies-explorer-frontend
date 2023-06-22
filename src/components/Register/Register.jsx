@@ -1,12 +1,26 @@
-import SignForm from '../SignForm/SignForm';
+import { useEffect } from 'react';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
+import SignForm from '../SignForm/SignForm';
 import Preloader from '../Preloader/Preloader';
 import './Register.css';
 
 function Register({ onSignUp, error, setError, textError, isLoading }) {
-  const { values, handleChange, errors, setValues, signUpBtnValid } = useFormAndValidation();
+  const {
+    values,
+    setValues,
+    nameError,
+    emailError,
+    passwordError,
+    isValid,
+    setIsValid,
+    handleChange,
+  } = useFormAndValidation({ name: '', email: '', password: '' });
 
   const { name, email, password } = values;
+
+  useEffect(() => {
+    setIsValid(false);
+  }, [setIsValid]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -32,7 +46,7 @@ function Register({ onSignUp, error, setError, textError, isLoading }) {
             <label className="sign__form-label">
               Имя
               <input
-                className="sign__form-input"
+                className={`sign__form-input ${nameError ? 'sign__form-input_error' : ''}`}
                 form="signUpForm"
                 type="text"
                 name="name"
@@ -48,12 +62,12 @@ function Register({ onSignUp, error, setError, textError, isLoading }) {
                 disabled={isLoading}
               />
             </label>
-            <span className="sign__form-input-error">{errors.name}</span>
+            {nameError && <span className="sign__form-input-error">{nameError}</span>}
 
             <label className="sign__form-label">
               E-mail
               <input
-                className="sign__form-input"
+                className={`sign__form-input ${emailError ? 'sign__form-input_error' : ''}`}
                 form="signUpForm"
                 type="email"
                 name="email"
@@ -67,12 +81,12 @@ function Register({ onSignUp, error, setError, textError, isLoading }) {
                 disabled={isLoading}
               />
             </label>
-            <span className="sign__form-input-error">{errors.email}</span>
+            {emailError && <span className="sign__form-input-error">{emailError}</span>}
 
             <label className="sign__form-label">
               Пароль
               <input
-                className="sign__form-input"
+                className={`sign__form-input ${passwordError ? 'sign__form-input_error' : ''}`}
                 form="signUpForm"
                 type="password"
                 name="password"
@@ -86,13 +100,13 @@ function Register({ onSignUp, error, setError, textError, isLoading }) {
                 disabled={isLoading}
               />
             </label>
-            <span className="sign__form-input-error">{errors.password}</span>
+            {passwordError && <span className="sign__form-input-error">{passwordError}</span>}
             {error && <p className="error-message error-message_sign">{textError}</p>}
 
             <button
               className="sign__button link-btn"
               type="submit"
-              disabled={signUpBtnValid}>
+              disabled={!isValid}>
               Зарегистрироваться
             </button>
           </form>

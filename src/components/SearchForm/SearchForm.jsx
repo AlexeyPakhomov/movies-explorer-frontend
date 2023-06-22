@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Switch from '../Switch/Switch';
 import './SearchForm.css';
 
-function SearchForm({ getMoviesData, isLoading }) {
+function SearchForm({ getMoviesData, isLoading, changeSwitch }) {
   const [searchMovie, setSearchMovie] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState(false);
@@ -24,6 +24,9 @@ function SearchForm({ getMoviesData, isLoading }) {
         setIsChecked(true);
       }
     }
+    //if (location.pathname === '/saved-movies') {
+    //  setSearchMovie('');
+    //}
   }, [location]);
 
   const handleInputChange = (e) => {
@@ -32,6 +35,7 @@ function SearchForm({ getMoviesData, isLoading }) {
 
   const handleSwitchChange = (e) => {
     setIsChecked(e.target.checked);
+    changeSwitch();
   };
 
   function handleSubmit(e) {
@@ -39,7 +43,7 @@ function SearchForm({ getMoviesData, isLoading }) {
     if (!searchMovie) {
       setError(true);
     } else {
-      getMoviesData(searchMovie, isChecked);
+      getMoviesData(searchMovie);
     }
   }
 

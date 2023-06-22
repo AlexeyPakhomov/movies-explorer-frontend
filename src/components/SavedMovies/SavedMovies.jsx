@@ -14,6 +14,7 @@ function SavedMovies({
   notFoundMovies,
   loggedIn,
   isLoading,
+  changeSwitch,
 }) {
   return (
     <>
@@ -22,6 +23,7 @@ function SavedMovies({
         <SearchForm
           getMoviesData={getMoviesData}
           isLoading={isLoading}
+          changeSwitch={changeSwitch}
         />
 
         {isLoading ? (

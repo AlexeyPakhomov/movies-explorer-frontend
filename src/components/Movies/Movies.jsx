@@ -15,6 +15,7 @@ function Movies({
   error,
   loggedIn,
   isLoading,
+  changeSwitch,
 }) {
   return (
     <>
@@ -23,6 +24,7 @@ function Movies({
         <SearchForm
           getMoviesData={getMoviesData}
           isLoading={isLoading}
+          changeSwitch={changeSwitch}
         />
 
         {isLoading ? (

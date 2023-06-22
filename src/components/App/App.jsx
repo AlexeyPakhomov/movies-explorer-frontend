@@ -34,6 +34,9 @@ function App() {
 
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isSwitch, setIsSwitch] = useState(false);
+  const [isSwitchSaved, setIsSwitchSaved] = useState(false);
+  //const [searchMovie, setSearchMovie] = useState('');
 
   const [error, setError] = useState(false);
   const [textError, setTextError] = useState('');
@@ -51,17 +54,19 @@ function App() {
     if (!jwtToken) {
       return;
     }
-    //setIsLoading(true);
     mainApi
       .validityToken(jwtToken)
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
-        navigate('/movies', { replace: true });
+        if (location.pathname === '/signup' || location.pathname === '/signin') {
+          navigate('/movies', { replace: true });
+        } else {
+          navigate(location.pathname, { replace: true });
+        }
         //console.log('handleTokenCheck, токен проверен', res);
       })
       .catch((err) => console.log(`Ошибка валидации токена: ${err}`));
-    //.finally(() => setIsLoading(false));
   }
 
   useEffect(() => {
@@ -71,6 +76,8 @@ function App() {
   //---------- Получаем сохраненные фильмы ----------
   useEffect(() => {
     if (loggedIn) {
+      localStorage.removeItem('filteredSavedMovies');
+      setIsSwitchSaved(false);
       mainApi
         .getUserMovies()
         .then((savedMovies) => {
@@ -85,9 +92,9 @@ function App() {
   }, [loggedIn, location]);
 
   useEffect(() => {
-    const movies = localStorage.getItem('movies');
+    const movies = JSON.parse(localStorage.getItem('filteredMovies'));
     if (movies) {
-      setMovies(JSON.parse(movies));
+      setMovies(movies);
     }
   }, [loggedIn]);
 
@@ -137,7 +144,7 @@ function App() {
       .then((currentUserData) => {
         setCurrentUser(currentUserData);
         setProfileUpdated(true);
-        setTimeout(() => setProfileUpdated(false), 3000);
+        setTimeout(() => setProfileUpdated(false), 5000);
         //console.log('Обновлены данные юзера', currentUserData);
       })
       .catch((err) => {
@@ -152,54 +159,93 @@ function App() {
       });
   }
 
-  //---------- Выборка фильмов по ключевому слову ----------
-  function filterKeyWord(searchMovie) {
-    const moviesList = JSON.parse(localStorage.getItem('movies'));
-    const newMovieList = filterArr(moviesList, searchMovie);
-    sortArray(newMovieList);
-    return newMovieList;
-  }
-
   //---------- Выборка фильмов при включенном чекбоксе ----------
   function filterSwitchMovies(movies) {
     return movies.filter((movie) => movie.duration < SHORT_MOVIE);
   }
 
-  //---------- Действия при 0 кол-ве фильмов на Movies ----------
-  function noMovies() {
-    setNotFoundMovies(true);
-    setMovies([]);
-    localStorage.removeItem('movies');
+  //---------- Отслеживаем состояние чекбокса на каждой стр. ----------
+  function handleChangeSwitch() {
+    !isSwitch ? setIsSwitch(true) : setIsSwitch(false);
   }
 
-  //---------- Поиск фильмов на movies с учетом всех условий ----------
-  function handleSearchMovie(searchMovie, isChecked) {
-    const moviesKey = filterKeyWord(searchMovie);
-    if (moviesKey.length === 0) {
-      noMovies();
-    } else if (isChecked) {
-      const moviesSwitch = filterSwitchMovies(moviesKey);
-      if (moviesSwitch.length === 0) {
-        noMovies();
-      } else {
-        localStorage.setItem('movies', JSON.stringify(moviesSwitch));
-        setMovies(moviesSwitch);
+  function handleChangeSwitchSaved() {
+    !isSwitchSaved ? setIsSwitchSaved(true) : setIsSwitchSaved(false);
+  }
+
+  //---------- Фильтрация по чекбоксу на movies ----------
+  function handleSwitchMovie() {
+    if (loggedIn) {
+      localStorage.setItem('switch', isSwitch);
+      const moviesSwitch = JSON.parse(localStorage.getItem('filteredMovies'));
+      if (moviesSwitch) {
+        if (isSwitch) {
+          const switchResult = filterSwitchMovies(moviesSwitch);
+          if (switchResult.length === 0) {
+            setMovies([]);
+            setNotFoundMovies(true);
+          } else {
+            setMovies(switchResult);
+            setNotFoundMovies(false);
+          }
+        } else {
+          setMovies(moviesSwitch);
+          setNotFoundMovies(false);
+        }
       }
-    } else {
-      localStorage.setItem('movies', JSON.stringify(moviesKey));
-      setMovies(moviesKey);
     }
   }
 
+  useEffect(() => {
+    handleSwitchMovie();
+  }, [isSwitch]);
+
+  //---------- Фильтрация по чекбоксу на saved-movies ----------
+  function handleSwitchSavedMovie() {
+    //localStorage.setItem('switchSavedMovies', isSwitchSaved);
+    //const moviesSaved = JSON.parse(localStorage.getItem('savedMovies'));
+    const moviesSavedSwitch = JSON.parse(localStorage.getItem('filteredSavedMovies'));
+    if (moviesSavedSwitch) {
+      if (isSwitchSaved) {
+        const switchSavedResult = filterSwitchMovies(moviesSavedSwitch);
+        if (switchSavedResult.length === 0) {
+          setSavedMovies([]);
+          setNotFoundMovies(true);
+        } else {
+          setSavedMovies(switchSavedResult);
+          setNotFoundMovies(false);
+        }
+      } else {
+        setSavedMovies(moviesSavedSwitch);
+        setNotFoundMovies(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    handleSwitchSavedMovie();
+  }, [isSwitchSaved]);
+
   //Загрузка фильмов с beatfilm с последующей фильтрацией фильмов или показ ошибок
-  function getMoviesBeatfilm(searchMovie, isChecked) {
+  function handleSearchMovie(searchMovie) {
+    const moviesList = JSON.parse(localStorage.getItem('movies'));
+    const moviesKey = filterArr(moviesList, searchMovie);
+    sortArray(moviesKey);
+    if (moviesKey.length === 0) {
+      setNotFoundMovies(true);
+    } else {
+      localStorage.setItem('filteredMovies', JSON.stringify(moviesKey));
+      handleSwitchMovie();
+    }
+  }
+
+  function getMoviesBeatfilm(searchMovie) {
     setIsLoading(true);
     localStorage.setItem('searchMovie', searchMovie);
-    localStorage.setItem('switch', isChecked);
     getMovies()
       .then((beatfilmMovies) => {
         localStorage.setItem('movies', JSON.stringify(beatfilmMovies));
-        handleSearchMovie(searchMovie, isChecked);
+        handleSearchMovie(searchMovie);
       })
       .catch((err) => {
         setError(true);
@@ -208,27 +254,19 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
-  //---------- Поиск фильмов на saved-movies с учетом всех условий ----------
-  function getMoviesSaved(searchMovie, isChecked) {
-    const moviesList = JSON.parse(localStorage.getItem('savedMovies'));
-    const newMovieList = filterArr(moviesList, searchMovie);
-    sortArray(newMovieList);
+  //Загрузка фильмов на saved-movies с последующей фильтрацией фильмов или показ ошибок
+  function getMoviesSaved(searchMovie) {
+    const moviesSavedList = JSON.parse(localStorage.getItem('savedMovies'));
+    const moviesSavedKey = filterArr(moviesSavedList, searchMovie);
+    sortArray(moviesSavedKey);
 
-    if (newMovieList.length === 0) {
+    if (moviesSavedKey.length === 0) {
+      setSavedMovies([]);
       setNotFoundMovies(true);
-      setSavedMovies(newMovieList);
-    } else if (isChecked) {
-      let moviesSwitch = filterSwitchMovies(newMovieList);
-      if (moviesSwitch.length === 0) {
-        setNotFoundMovies(true);
-        setSavedMovies(moviesSwitch);
-      } else {
-        setSavedMovies(moviesSwitch);
-        setNotFoundMovies(false);
-      }
+      localStorage.removeItem('filteredSavedMovies');
     } else {
-      setSavedMovies(newMovieList);
-      setNotFoundMovies(false);
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(moviesSavedKey));
+      handleSwitchSavedMovie();
     }
   }
 
@@ -244,7 +282,6 @@ function App() {
     const movieSelected = savedMovies.find((m) => m.movieId === movie.id);
 
     if (movieSelected) {
-      //setIsLoading(true);
       mainApi
         .deleteMovie(movieSelected._id)
         .then((movie) => {
@@ -255,9 +292,7 @@ function App() {
         .catch((err) => {
           console.log(`Ошибка удаления фильма: ${err}`);
         });
-      //.finally(() => setIsLoading(false));
     } else {
-      //setIsLoading(true);
       mainApi
         .saveMovie(movie)
         .then((data) => {
@@ -269,33 +304,31 @@ function App() {
         .catch((err) => {
           console.log(`Ошибка сохранения фильма: ${err}`);
         });
-      //.finally(() => setIsLoading(false));
     }
   }
 
   //---------- Удаление сохраненного фильма на saved-movies ----------
   function handleDeleteSavedMovie(movie) {
-    setIsLoading(true);
     mainApi
       .deleteMovie(movie._id)
       .then((movie) => {
         const updatedSavedMovies = savedMovies.filter((m) => m._id !== movie._id);
         setSavedMovies(updatedSavedMovies);
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
+        localStorage.setItem('filteredSavedMovies', JSON.stringify(updatedSavedMovies));
       })
       .catch((err) => {
         console.log(`Ошибка удаления фильма: ${err}`);
-      })
-      .finally(() => setIsLoading(false));
+      });
   }
 
   //---------- Выход из аккаунта ----------
   function handleSignOut() {
     setLoggedIn(false);
-    localStorage.clear();
     setCurrentUser({});
     setMovies([]);
     setSavedMovies([]);
+    localStorage.clear();
     setError(false);
     navigate('/', { replace: true });
     //console.log('Пользователь вышел', currentUser);
@@ -349,6 +382,7 @@ function App() {
                   error={error}
                   loggedIn={loggedIn}
                   isLoading={isLoading}
+                  changeSwitch={handleChangeSwitch}
                 />
               }
             />
@@ -364,6 +398,7 @@ function App() {
                   notFoundMovies={notFoundMovies}
                   loggedIn={loggedIn}
                   isLoading={isLoading}
+                  changeSwitch={handleChangeSwitchSaved}
                 />
               }
             />

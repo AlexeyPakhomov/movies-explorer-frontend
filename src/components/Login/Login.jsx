@@ -1,12 +1,21 @@
+import { useEffect } from 'react';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import Preloader from '../Preloader/Preloader';
 import SignForm from '../SignForm/SignForm';
 import '../Register/Register.css';
 
 function Login({ onSignIn, error, setError, textError, isLoading }) {
-  const { values, handleChange, errors, setValues, signInBtnValid } = useFormAndValidation();
+  const { values, setValues, emailError, passwordError, isValid, setIsValid, handleChange } =
+    useFormAndValidation({
+      email: '',
+      password: '',
+    });
 
   const { email, password } = values;
+
+  useEffect(() => {
+    setIsValid(false);
+  }, [setIsValid]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -31,7 +40,7 @@ function Login({ onSignIn, error, setError, textError, isLoading }) {
             <label className="sign__form-label">
               E-mail
               <input
-                className="sign__form-input"
+                className={`sign__form-input ${emailError ? 'sign__form-input_error' : ''}`}
                 form="signInForm"
                 type="email"
                 name="email"
@@ -45,12 +54,12 @@ function Login({ onSignIn, error, setError, textError, isLoading }) {
                 disabled={isLoading}
               />
             </label>
-            <span className="sign__form-input-error">{errors.email}</span>
+            {emailError && <span className="sign__form-input-error">{emailError}</span>}
 
             <label className="sign__form-label">
               Пароль
               <input
-                className="sign__form-input"
+                className={`sign__form-input ${passwordError ? 'sign__form-input_error' : ''}`}
                 form="signInForm"
                 type="password"
                 name="password"
@@ -64,13 +73,13 @@ function Login({ onSignIn, error, setError, textError, isLoading }) {
                 disabled={isLoading}
               />
             </label>
-            <span className="sign__form-input-error">{errors.password}</span>
+            {passwordError && <span className="sign__form-input-error">{passwordError}</span>}
             {error && <p className="error-message error-message_sign">{textError}</p>}
 
             <button
               className={`sign__button sign__button-in link-btn`}
               type="submit"
-              disabled={signInBtnValid}>
+              disabled={!isValid}>
               Войти
             </button>
           </form>

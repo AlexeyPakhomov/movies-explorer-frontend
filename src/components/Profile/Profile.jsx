@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import Preloader from '../Preloader/Preloader';
@@ -17,9 +17,21 @@ function Profile({
   loggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation();
+  const [inputDisabled, setInputDisabled] = useState(true);
+
+  const { values, nameError, emailError, isValid, setIsValid, handleChange, resetForm } =
+    useFormAndValidation({ name: currentUser.name, email: currentUser.email });
 
   const { name, email } = values;
+
+  function handleToggleInput() {
+    setInputDisabled(!inputDisabled);
+    setError(false);
+  }
+
+  useEffect(() => {
+    setIsValid(false);
+  }, [setIsValid]);
 
   useEffect(() => {
     currentUser ? resetForm(currentUser) : resetForm();
@@ -29,6 +41,7 @@ function Profile({
     e.preventDefault();
     onUpdateUser({ name, email });
     resetForm(currentUser);
+    setInputDisabled(true);
   }
 
   return (
@@ -60,9 +73,9 @@ function Profile({
                       setError(false);
                       handleChange(e);
                     }}
-                    disabled={isLoading}
+                    disabled={inputDisabled}
                   />
-                  <span className="profile__input-error">{errors.name}</span>
+                  {nameError && <span className="profile__input-error">{nameError}</span>}
                 </div>
                 <hr className="profile__line" />
                 <div className="profile__row">
@@ -78,11 +91,13 @@ function Profile({
                       setError(false);
                       handleChange(e);
                     }}
-                    disabled={isLoading}
+                    disabled={inputDisabled}
                   />
-                  <span className="profile__input-error profile__input-error_bottom">
-                    {errors.email}
-                  </span>
+                  {emailError && (
+                    <span className="profile__input-error profile__input-error_bottom">
+                      {emailError}
+                    </span>
+                  )}
                 </div>
 
                 {profileUpdated && (
@@ -91,16 +106,22 @@ function Profile({
 
                 {error && <p className="error-message error-message_profile">{textError}</p>}
 
-                {!isValid ? (
-                  <p className="profile__edit link">Редактировать</p>
-                ) : (
-                  <button
-                    className="profile__edit_ok link-btn"
-                    type="submit"
-                    disabled={!isValid}>
-                    Сохранить
-                  </button>
-                )}
+                <p
+                  className={`profile__edit link ${
+                    inputDisabled ? '' : 'profile__edit profile__edit_hide'
+                  }`}
+                  onClick={handleToggleInput}>
+                  Редактировать
+                </p>
+                <button
+                  className={`profile__edit_ok link-btn ${
+                    inputDisabled ? 'profile__edit_ok-hide' : ''
+                  }`}
+                  type="submit"
+                  disabled={!isValid || (currentUser.name === name && currentUser.email === email)}>
+                  Сохранить
+                </button>
+
                 <button
                   className="profile__exit link"
                   type="button"
