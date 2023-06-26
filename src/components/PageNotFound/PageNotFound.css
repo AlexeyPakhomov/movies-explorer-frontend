@@ -53,6 +53,9 @@
 }
 
 .page-404__back {
+  padding: 0;
+  border: none;
+  background-color: transparent;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

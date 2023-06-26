@@ -1,3 +1,9 @@
+.sign__form {
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+
 .sign__form-label {
   margin: 0;
   padding: 0;
@@ -27,12 +33,12 @@
   color: #ffffff;
 }
 
-/*.sign__form-input::placeholder {
-  color: #ffffff;
-}*/
-
 .sign__form-input:focus {
   outline: 1px solid #8b8b8b;
+}
+
+.sign__form-input_error:focus {
+  outline: 1px solid #ee3465;
 }
 
 .sign__form-input-error {
@@ -47,9 +53,9 @@
   color: #ee3465;
 }
 
-.sign__form {
-  margin: 0 auto;
-  width: 100%;
+.sign__button:disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
 }
 
 .sign__button {
@@ -84,7 +90,8 @@
   }
 }
 
-.sign__button:disabled {
-  background: #f8f8f8;
-  color: #c2c2c2;
+.error-message_sign {
+  position: absolute;
+  width: 100%;
+  bottom: 80px;
 }

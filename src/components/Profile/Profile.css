@@ -1,5 +1,6 @@
 .profile {
   margin: 0 auto;
+  position: relative;
   padding-top: 74px;
   padding-bottom: 70px;
   width: 410px;
@@ -104,6 +105,17 @@
   min-height: 14px;
 }
 
+.profile__input::placeholder {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+}
+
+.profile__input:focus::placeholder {
+  color: transparent;
+}
+
 .profile__input:last-of-type {
   align-self: start;
 }
@@ -154,6 +166,10 @@
   line-height: 1.23;
 }
 
+.profile__edit_hide {
+  display: none;
+}
+
 @media screen and (max-width: 320px) {
   .profile__edit {
     font-size: 12px;
@@ -177,6 +193,15 @@
   text-align: center;
 }
 
+.profile__edit_ok-hide {
+  display: none;
+}
+
+.profile__edit_ok:disabled {
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+}
+
 .profile__exit {
   margin: 0 auto;
   padding: 0;
@@ -195,4 +220,28 @@
     font-size: 12px;
     line-height: 1.25;
   }
+}
+
+.error-message_profile {
+  position: absolute;
+  bottom: 165px;
+}
+
+@media screen and (max-width: 768px) {
+  .error-message_profile {
+    bottom: 365px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .error-message_profile {
+    bottom: 135px;
+  }
+}
+
+.error-message_sign-up {
+  margin: 0 auto;
+  margin-top: 39px;
+  position: absolute;
+  width: 100%;
 }

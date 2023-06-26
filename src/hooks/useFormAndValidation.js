@@ -1,35 +1,85 @@
+import { useEffect } from 'react';
 import { useState, useCallback } from 'react';
+import {
+  PATTERN_EMAIL,
+  INVALID_EMAIL_ERR,
+  PATTERN_NAME,
+  INVALID_NAME_ERR,
+  EMPTY_INPUT_ERR,
+} from '../utils/constants';
 
-function useFormAndValidation() {
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+export const useFormAndValidation = (userData) => {
+  const [values, setValues] = useState(userData);
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
+  useEffect(() => {
+    if (
+      nameError ||
+      emailError ||
+      passwordError ||
+      values.name === '' ||
+      values.email === '' ||
+      values.password === ''
+    ) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+  }, [values, nameError, emailError, passwordError]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: evt.target.validationMessage });
-    setIsValid(evt.target.closest('form').checkValidity());
+
+    if (name === undefined) {
+      setNameError('');
+      setEmailError('');
+      setPasswordError('');
+    } else {
+      if (name === 'name') {
+        if (!PATTERN_NAME.test(value) || value.length === 1 || value.length > 30) {
+          setNameError(INVALID_NAME_ERR);
+        } else {
+          setNameError('');
+        }
+      }
+      if (name === 'email') {
+        if (!PATTERN_EMAIL.test(value)) {
+          setEmailError(INVALID_EMAIL_ERR);
+        } else {
+          setEmailError('');
+        }
+      }
+      if (name === 'password') {
+        if (value.length === 0) {
+          setPasswordError(EMPTY_INPUT_ERR);
+        } else {
+          setPasswordError('');
+        }
+      }
+    }
   };
 
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
+    (newValues = {}, newIsValid = false) => {
       setValues(newValues);
-      setErrors(newErrors);
       setIsValid(newIsValid);
     },
-    [setValues, setErrors, setIsValid],
+    [setValues, setIsValid],
   );
 
   return {
     values,
-    handleChange,
-    errors,
-    isValid,
-    resetForm,
     setValues,
+    nameError,
+    emailError,
+    passwordError,
+    isValid,
     setIsValid,
+    handleChange,
+    resetForm,
   };
-}
-
-export default useFormAndValidation;
+};

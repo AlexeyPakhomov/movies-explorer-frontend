@@ -1,18 +1,48 @@
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Pagination from '../Pagination/Pagination';
 import Footer from '../Footer/Footer';
-import moviesData from '../../utils/movies';
+import { NOT_FOUND_MOVIE, ERROR_SEARCH_MOVIE } from '../../utils/constants';
 
-function Movies({ loggedIn }) {
+function Movies({
+  movies,
+  getMoviesData,
+  onSave,
+  saveMovieIcon,
+  deleteMovie,
+  notFoundMovies,
+  error,
+  loggedIn,
+  isLoading,
+  changeSwitch,
+}) {
   return (
     <>
       <Header loggedIn={loggedIn} />
       <main>
-        <SearchForm />
-        <MoviesCardList moviesData={moviesData} />
-        <Pagination />
+        <SearchForm
+          getMoviesData={getMoviesData}
+          isLoading={isLoading}
+          changeSwitch={changeSwitch}
+        />
+
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          movies && (
+            <MoviesCardList
+              movies={movies}
+              onSave={onSave}
+              saveMovieIcon={saveMovieIcon}
+              deleteMovie={deleteMovie}
+            />
+          )
+        )}
+
+        {error ? <p className="error-message">{ERROR_SEARCH_MOVIE}</p> : ''}
+
+        {notFoundMovies && <p className="error-message">{NOT_FOUND_MOVIE}</p>}
       </main>
       <Footer />
     </>

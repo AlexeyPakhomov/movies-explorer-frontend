@@ -1,9 +1,19 @@
 import { useLocation } from 'react-router-dom';
-import getTime from '../../utils/getTime';
+import { getTime } from '../../utils/getTime';
+import { BEATFILM_URL } from '../../utils/constants';
 import './MoviesCard.css';
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onSave, saveMovieIcon, deleteMovie }) {
   const location = useLocation();
+  const isSave = saveMovieIcon(movie);
+
+  function handleSaveMovie() {
+    onSave(movie);
+  }
+
+  function handleDeleteMovie() {
+    deleteMovie(movie);
+  }
 
   return (
     <li>
@@ -14,17 +24,39 @@ function MoviesCard({ movie }) {
 
           {location.pathname === '/movies' && (
             <button
-              className={movie.save ? 'card__not-saved card__saved link' : 'card__not-saved link'}
-              type="button"></button>
+              className={isSave ? 'card__not-saved card__saved link' : 'card__not-saved link'}
+              type="button"
+              onClick={handleSaveMovie}></button>
           )}
 
           {location.pathname === '/saved-movies' && (
-            <button className="card__not-saved card__delete link" type="button"></button>
+            <button
+              className="card__not-saved card__delete link"
+              type="button"
+              onClick={handleDeleteMovie}></button>
           )}
         </div>
-        <div className="card__poster">
-          <img className="card__img" src={movie.thumbnail} alt={movie.nameRU} />
-        </div>
+        <a
+          className="card__poster"
+          href={movie.trailerLink}
+          target="_blank"
+          rel="noreferrer">
+          {location.pathname === '/movies' && (
+            <img
+              className="card__img"
+              src={`${BEATFILM_URL}${movie.image.url} `}
+              alt={movie.nameRU}
+            />
+          )}
+
+          {location.pathname === '/saved-movies' && (
+            <img
+              className="card__img"
+              src={movie.image}
+              alt={movie.nameRU}
+            />
+          )}
+        </a>
       </article>
     </li>
   );

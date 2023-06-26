@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import './SignForm.css';
 
-function SignForm({ title, children, text, linkText }) {
+function SignForm({ children, title, text, linkText }) {
   const location = useLocation();
 
   return (
@@ -16,13 +16,17 @@ function SignForm({ title, children, text, linkText }) {
         {text}
 
         {location.pathname === '/signup' && (
-          <Link to="/signin" className="sign__link link">
+          <Link
+            to="/signin"
+            className="sign__link link">
             {linkText}
           </Link>
         )}
 
         {location.pathname === '/signin' && (
-          <Link to="/signup" className="sign__link link">
+          <Link
+            to="/signup"
+            className="sign__link link">
             {linkText}
           </Link>
         )}

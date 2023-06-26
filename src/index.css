@@ -77,3 +77,13 @@ body {
   background-color: #dadada;
   border: none;
 }
+
+.error-message {
+  margin: 0 auto;
+  color: #ff004c;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+}

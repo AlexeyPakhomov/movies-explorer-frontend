@@ -13,12 +13,17 @@ function SideMenu() {
 
   return (
     <>
-      <button className="header__burger link" onClick={handleToggleMenu}>
+      <button
+        className="header__burger link"
+        onClick={handleToggleMenu}>
         <span></span>
       </button>
       <nav className={`side-menu ${isSideMenu ? 'side-menu_opened' : ''}`}>
         <div className={`side-menu__container ${isSideMenu ? 'side-menu_opened' : ''}`}>
-          <button className="side-menu__close" type="button" onClick={handleToggleMenu}>
+          <button
+            className="side-menu__close"
+            type="button"
+            onClick={handleToggleMenu}>
             <img
               className="side-menu__close-img link"
               src={iconCloseMenu}
@@ -27,17 +32,26 @@ function SideMenu() {
           </button>
           <ul className="side-menu__list list">
             {}
-            <Link to="/" className="side-menu__link" onClick={handleToggleMenu}>
+            <Link
+              to="/"
+              className="side-menu__link"
+              onClick={handleToggleMenu}>
               <li className="side-menu__item">Главная</li>
             </Link>
-            <Link to="/movies" className="side-menu__link" onClick={handleToggleMenu}>
+            <Link
+              to="/movies"
+              className="side-menu__link"
+              onClick={handleToggleMenu}>
               <li className="side-menu__item">Фильмы</li>
             </Link>
-            <Link to="/saved-movies" className="side-menu__link" onClick={handleToggleMenu}>
+            <Link
+              to="/saved-movies"
+              className="side-menu__link"
+              onClick={handleToggleMenu}>
               <li className="side-menu__item">Сохранённые фильмы</li>
             </Link>
           </ul>
-          <BtnAccount />
+          <BtnAccount handleToggleMenu={handleToggleMenu} />
         </div>
       </nav>
     </>
