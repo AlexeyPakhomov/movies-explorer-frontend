@@ -19,5 +19,6 @@
 - Страница авторизации. На ней пользователь может войти в систему.
 - Страница редактирования профиля. Пользователь может изменить данные своего аккаунта.
 
-[Ссылка на макет проекта](https://disk.yandex.ru/d/3N2R8Cbizw67RA)
+[Ссылка на макет проекта](https://disk.yandex.ru/d/3N2R8Cbizw67RA)\
 [Ссылка на pull requests](https://github.com/AlexeyPakhomov/movies-explorer-frontend/pull/3#pullrequestreview-1495431759)
+[Ссылка на бэкенд проекта](https://github.com/AlexeyPakhomov/movies-explorer-api)
